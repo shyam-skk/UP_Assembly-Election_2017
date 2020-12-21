@@ -1,6 +1,7 @@
-setwd("C:/Users/SHYAM KRISHNAN K/Desktop/project-5")
-getwd()
 
+
+
+#Some libraries
 
 library(car)
 library(caret)
@@ -26,12 +27,14 @@ library(rpart.plot)
 library(randomForest)
 library(neuralnet)
 
-
+setwd("C:/Users/SHYAM KRISHNAN K/Desktop/project-5")
+getwd()
 Loan<-read.csv(file.choose(), header=T)
 #na.omit(Loan)
 
 summary(Loan)
 str(Loan)
+
 
 levels(Loan$Purpose)
 levels(Loan$Job)
@@ -57,6 +60,7 @@ Loan$Purpose.personal<-ifelse(Loan$Purpose=="personal",1,0)
 #PLOTS
 
 str(Loan)
+levels(Loan$Status)
 # qplot()
 qplot(Credit.Score,  EMI.Ratio, colour = Status, data=Loan)
 qplot(Work.Exp,  EMI.Ratio, colour = Status, data=Loan)
@@ -224,10 +228,12 @@ mse1 <- mean((val.reg$EMI.Ratio- pred.reg)^2)
 print(mse1)
 
 ###########
-#Linear Probability Model
-train.logit<-train[,c(2,4:7,9,11:24)]
+####################################################### Linear Probability Model
+train.lpm<-train[,c(2,4:7,9,11:24)]
 val.lpm<-val[,c(2,4:7,9,11:24)]
 
+dim(train.lpm)
+dim(val.lpm)
 LPM.1<-Default  ~ Credit.Score
 
 
@@ -296,7 +302,7 @@ summary(val.lpm$correct.LPM)
 
 #Logistic Regression
 
-install.packages(c("SDMTools","pROC", "Hmisc"))
+#install.packages(c("SDMTools","pROC", "Hmisc"))
 library(SDMTools)
 library(pROC)
 library(Hmisc)
